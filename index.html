@@ -7,14 +7,25 @@
   body {
     margin: 0;
   }
+  div {
+    margin: auto;
+    height: 50%;
+  }
   webgl-cube {
-    position: absolute;
-    height: 100%;
-    width: 100%;
+    display: inline-block;
+    height: 300px;
+    width: 300px;
   }
 </style>
 
-<webgl-cube color=lightgreen></webgl-cube>
+<div>
+  <webgl-cube color=red></webgl-cube>
+  <webgl-cube color=yellow></webgl-cube>
+</div>
+<div>
+  <webgl-cube color=lightgreen></webgl-cube>
+  <webgl-cube color=blue></webgl-cube>
+</div>
 
 <script src=three.js></script>
 <script src=webgl-cube.js></script>
