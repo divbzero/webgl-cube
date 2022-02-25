@@ -40,7 +40,8 @@ class WebglCubeElement extends HTMLElement {
     this.camera = new THREE.PerspectiveCamera(75, this.clientWidth / this.clientHeight, 0.1, 1000)
     this.camera.position.z = 5
 
-    this.renderer = new THREE.WebGLRenderer()
+    this.renderer = new THREE.WebGLRenderer({alpha: true})
+    this.renderer.setClearColor(0xFFFFFF, 0)
     this.renderer.setSize(this.clientWidth, this.clientHeight)
     this.appendChild(this.renderer.domElement)
 
