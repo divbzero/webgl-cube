@@ -4,12 +4,31 @@ class WebglCubeElement extends HTMLElement {
     super()
   }
 
+  get color() {
+    return this.getAttribute('color') || undefined
+  }
+
+  set color(newValue) {
+    switch (newValue) {
+      case null:
+      case undefined:
+        this.removeAttribute('color')
+        break
+      default:
+        this.setAttribute('color', newValue)
+    }
+  }
+
   static get observedAttributes() {
-    return []
+    return ['color']
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
+      case 'color':
+        if (this.material) {
+          this.material.color = new THREE.Color(newValue || oldValue || 0x00FF00)
+        }
       default:
         // do nothing
     }
@@ -24,7 +43,7 @@ class WebglCubeElement extends HTMLElement {
     this.appendChild(this.renderer.domElement)
 
     this.geometry = new THREE.BoxGeometry()
-    this.material = new THREE.MeshBasicMaterial({color: 0x00ff00})
+    this.material = new THREE.MeshBasicMaterial({color: this.getAttribute('color') || 0x00FF00})
     this.cube = new THREE.Mesh(this.geometry, this.material)
 
     this.scene.add(this.cube)
