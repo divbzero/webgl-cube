@@ -36,10 +36,12 @@ class WebglCubeElement extends HTMLElement {
 
   connectedCallback() {
     this.scene = new THREE.Scene()
-    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+
+    this.camera = new THREE.PerspectiveCamera(75, this.clientWidth / this.clientHeight, 0.1, 1000)
+    this.camera.position.z = 5
 
     this.renderer = new THREE.WebGLRenderer()
-    this.renderer.setSize(window.innerWidth, window.innerHeight)
+    this.renderer.setSize(this.clientWidth, this.clientHeight)
     this.appendChild(this.renderer.domElement)
 
     this.geometry = new THREE.BoxGeometry()
@@ -47,7 +49,13 @@ class WebglCubeElement extends HTMLElement {
     this.cube = new THREE.Mesh(this.geometry, this.material)
 
     this.scene.add(this.cube)
-    this.camera.position.z = 5
+
+    this.resizeObserver = new ResizeObserver(entries => {
+      this.camera = new THREE.PerspectiveCamera(75, this.clientWidth / this.clientHeight, 0.1, 1000)
+      this.camera.position.z = 5
+      this.renderer.setSize(this.clientWidth, this.clientHeight)
+    })
+    this.resizeObserver.observe(this)
 
     this.render()
   }
@@ -59,6 +67,8 @@ class WebglCubeElement extends HTMLElement {
     this.geometry = null
     this.material = null
     this.cube = null
+    this.resizeObserver.unobserve(this)
+    this.resizeObserver = null
     this.innerHTML = ''
   }
 
