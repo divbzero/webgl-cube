@@ -46,10 +46,18 @@ class WebglCubeElement extends HTMLElement {
     this.appendChild(this.renderer.domElement)
 
     this.geometry = new THREE.BoxGeometry()
-    this.material = new THREE.MeshBasicMaterial({color: this.getAttribute('color') || 0x00FF00})
+    this.material = new THREE.MeshLambertMaterial({color: this.getAttribute('color') || 0x00FF00})
     this.cube = new THREE.Mesh(this.geometry, this.material)
 
+    this.ambiance = new THREE.AmbientLight(0xffffff, 0.6)
+    this.spotlight = new THREE.DirectionalLight(0xffffff, 0.6)
+    this.spotlight.position.x = 1
+    this.spotlight.position.y = 1
+    this.spotlight.position.z = 1
+
     this.scene.add(this.cube)
+    this.scene.add(this.ambiance)
+    this.scene.add(this.spotlight)
 
     this.resizeObserver = new ResizeObserver(entries => {
       this.camera = new THREE.PerspectiveCamera(75, this.clientWidth / this.clientHeight, 0.1, 1000)
@@ -68,6 +76,8 @@ class WebglCubeElement extends HTMLElement {
     this.geometry = null
     this.material = null
     this.cube = null
+    this.ambiance = null
+    this.spotlight = null
     this.resizeObserver.unobserve(this)
     this.resizeObserver = null
     this.innerHTML = ''
