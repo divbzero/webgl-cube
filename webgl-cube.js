@@ -37,8 +37,8 @@ class WebglCubeElement extends HTMLElement {
   connectedCallback() {
     this.scene = new THREE.Scene()
 
-    this.camera = new THREE.PerspectiveCamera(75, this.clientWidth / this.clientHeight, 0.1, 1000)
-    this.camera.position.z = 5
+    this.camera = new THREE.PerspectiveCamera(45, this.clientWidth / this.clientHeight, 0.1, 1000)
+    this.camera.position.z = 3
 
     this.renderer = new THREE.WebGLRenderer({alpha: true})
     this.renderer.setClearColor(0xFFFFFF, 0)
@@ -60,8 +60,8 @@ class WebglCubeElement extends HTMLElement {
     this.scene.add(this.spotlight)
 
     this.resizeObserver = new ResizeObserver(entries => {
-      this.camera = new THREE.PerspectiveCamera(75, this.clientWidth / this.clientHeight, 0.1, 1000)
-      this.camera.position.z = 5
+      this.camera = new THREE.PerspectiveCamera(45, this.clientWidth / this.clientHeight, 0.1, 1000)
+      this.camera.position.z = 3
       this.renderer.setSize(this.clientWidth, this.clientHeight)
     })
     this.resizeObserver.observe(this)
